@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASIOOMON — Association of Independent Online and Offline Multi Level Marketers of Nigeria</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --green:#1a4a2e;--green-light:#2d6b45;--green-dark:#0f2d1c;
+  --gold:#c9a227;--cream:#f5f0e8;--cream2:#ede8dc;
+  --white:#fff;--text:#1a1a1a;--muted:#4a5568;
+}
+body{font-family:'Georgia',serif;background:var(--cream);color:var(--text);font-size:16px;line-height:1.6}
+nav{background:var(--cream);border-bottom:0.5px solid #d4cfc4;padding:12px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.nav-logo img{width:48px;height:48px;object-fit:contain}
+.nav-name{color:var(--green);font-weight:700;font-size:17px;letter-spacing:0.5px}
+.nav-links{display:flex;gap:18px;align-items:center}
+.nav-links a{color:var(--text);text-decoration:none;font-size:14px;font-family:Arial,sans-serif;cursor:pointer}
+.nav-links a:hover,.nav-links a.active{color:var(--green);font-weight:600}
+.btn-member{background:var(--green);color:white;padding:10px 22px;border-radius:50px;font-size:14px;font-family:Arial,sans-serif;border:none;cursor:pointer}
+.hamburger{display:none;background:none;border:none;font-size:24px;cursor:pointer;color:var(--green)}
+.mobile-menu{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:var(--cream);z-index:200;padding:24px;flex-direction:column;gap:0}
+.mobile-menu.open{display:flex}
+.mobile-menu-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:32px}
+.mobile-menu a{font-family:Arial,sans-serif;font-size:18px;padding:16px 0;border-bottom:0.5px solid #d4cfc4;color:var(--text);text-decoration:none;cursor:pointer}
+.mobile-menu .btn-member-mobile{background:var(--green);color:white;padding:14px;border-radius:50px;text-align:center;margin-top:24px;font-family:Arial,sans-serif;font-size:16px;font-weight:600;cursor:pointer;border:none;width:100%}
+.page{display:none}.page.active{display:block}
+.hero{background:var(--green);color:white;padding:56px 32px 48px}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);padding:6px 14px;border-radius:50px;font-size:11px;font-family:Arial,sans-serif;letter-spacing:1px;margin-bottom:24px}
+.hero h1{font-size:clamp(24px,4.5vw,42px);font-weight:700;line-height:1.2;margin-bottom:16px}
+.hero h1 span{color:var(--gold)}
+.hero p{font-family:Arial,sans-serif;font-size:15px;opacity:0.9;max-width:520px;margin-bottom:26px}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap}
+.btn-gold{background:var(--gold);color:#1a1a1a;padding:13px 26px;border-radius:50px;font-family:Arial,sans-serif;font-size:14px;font-weight:600;border:none;cursor:pointer}
+.btn-outline{background:transparent;color:white;padding:13px 26px;border-radius:50px;font-family:Arial,sans-serif;font-size:14px;border:1.5px solid rgba(255,255,255,0.5);cursor:pointer}
+.hero-stats{display:flex;gap:32px;margin-top:36px;padding-top:28px;border-top:1px solid rgba(255,255,255,0.2);flex-wrap:wrap}
+.stat-num{color:var(--gold);font-size:26px;font-weight:700;display:block}
+.stat-label{font-family:Arial,sans-serif;font-size:11px;letter-spacing:1.5px;opacity:0.7}
+section{padding:48px 32px}
+.sec-label{font-family:Arial,sans-serif;font-size:11px;letter-spacing:2px;color:var(--gold);margin-bottom:12px}
+.sec-title{font-size:clamp(20px,3vw,28px);color:var(--green);margin-bottom:28px;line-height:1.3}
+.benefits-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.benefit-card{background:white;border:0.5px solid #e0e0e0;border-radius:14px;padding:22px}
+.b-icon{width:44px;height:44px;background:#e8f0e8;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;color:var(--green);font-size:20px}
+.benefit-card h3{color:var(--green);font-size:15px;margin-bottom:6px}
+.benefit-card p{font-family:Arial,sans-serif;font-size:13px;color:var(--muted);line-height:1.6}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.about-card{background:white;border-radius:12px;border:0.5px solid #ddd;padding:22px}
+.about-card h3{color:var(--green);margin-bottom:8px;font-size:16px}
+.about-card p{font-family:Arial,sans-serif;font-size:13px;color:var(--muted);line-height:1.6}
+.pres-wrap{background:var(--green);border-radius:16px;padding:32px;color:white;display:flex;gap:28px;align-items:flex-start;flex-wrap:wrap}
+.pres-logo{width:110px;height:110px;background:white;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;padding:8px}
+.pres-logo img{width:100%;height:100%;object-fit:contain}
+.pres-label{font-family:Arial,sans-serif;font-size:10px;letter-spacing:2px;color:var(--gold);margin-bottom:8px}
+.pres-wrap h2{font-size:22px;margin-bottom:14px}
+.pres-wrap p{font-family:Arial,sans-serif;font-size:13.5px;opacity:0.9;margin-bottom:8px;line-height:1.7}
+.pres-sig strong{font-size:14px;display:block;margin-top:16px}
+.pres-sig span{font-family:Arial,sans-serif;font-size:12px;opacity:0.7}
+.cta{background:var(--green);color:white;text-align:center;padding:56px 32px}
+.cta h2{font-size:clamp(20px,3.5vw,32px);margin-bottom:12px}
+.cta p{font-family:Arial,sans-serif;font-size:14px;opacity:0.85;max-width:460px;margin:0 auto 26px}
+.mem-hero{background:var(--green);color:white;padding:40px 32px 48px}
+.mem-hero .sec-label{color:var(--gold)}
+.mem-hero h1{font-size:clamp(20px,3.5vw,34px);margin-bottom:10px}
+.mem-hero p{font-family:Arial,sans-serif;font-size:14px;opacity:0.9}
+.mem-hero p strong{color:var(--gold)}
+.mem-body{padding:32px}
+.form-card{background:white;border-radius:16px;border:0.5px solid #ddd;padding:26px;max-width:600px;margin:0 auto}
+.form-stitle{color:var(--green);font-size:17px;margin-bottom:18px}
+.form-group{margin-bottom:16px}
+.form-group label{display:block;font-family:Arial,sans-serif;font-size:14px;margin-bottom:5px}
+.form-group label span{color:#e53e3e}
+.form-group input,.form-group select{width:100%;border:1px solid #d1d5db;border-radius:8px;padding:10px 13px;font-size:15px;font-family:Arial,sans-serif;background:white}
+.form-group input:focus,.form-group select:focus{outline:2px solid var(--green);border-color:var(--green)}
+.form-divider{border:none;border-top:1px solid #e5e5e5;margin:20px 0}
+.btn-submit{background:var(--green);color:white;width:100%;padding:14px;border-radius:50px;font-size:16px;font-family:Arial,sans-serif;font-weight:600;border:none;cursor:pointer;margin-top:6px}
+.success-screen{text-align:center;padding:36px 16px;display:none}
+.success-screen.show{display:block}
+.form-body.hidden{display:none}
+.exec-grid{display:grid;grid-template-columns:1fr;gap:16px}
+.leader-card{background:white;border:0.5px solid #e0e0e0;border-radius:14px;padding:20px;display:flex;gap:16px;align-items:flex-start}
+.leader-avatar{width:62px;height:62px;border-radius:50%;background:var(--green);border:2.5px solid var(--gold);display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:17px;font-weight:700;flex-shrink:0;font-family:Arial,sans-serif}
+.leader-info h3{color:var(--green);font-size:15px;margin-bottom:2px}
+.leader-info .pos{font-family:Arial,sans-serif;font-size:11px;color:var(--gold);font-weight:700;letter-spacing:0.8px;text-transform:uppercase;margin-bottom:5px}
+.leader-info p{font-family:Arial,sans-serif;font-size:13px;color:var(--muted);line-height:1.5}
+.interim-badge{display:inline-block;background:#fef3c7;color:#92400e;font-family:Arial,sans-serif;font-size:11px;padding:3px 10px;border-radius:50px;margin-top:6px;border:0.5px solid #fbbf24}
+.bot-header{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.bot-members{display:grid;grid-template-columns:1fr;gap:12px}
+.bot-officer{background:var(--green);border-radius:14px;padding:20px;color:white;display:flex;gap:14px;align-items:center}
+.bot-avatar{width:54px;height:54px;border-radius:50%;background:rgba(255,255,255,0.15);border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:16px;font-weight:700;flex-shrink:0;font-family:Arial,sans-serif}
+.bot-officer h3{font-size:15px;margin-bottom:2px}
+.bot-officer .pos{font-family:Arial,sans-serif;font-size:11px;color:var(--gold);letter-spacing:0.8px;text-transform:uppercase}
+.bot-member-card{background:white;border:0.5px solid #e0e0e0;border-radius:12px;padding:16px;display:flex;gap:14px;align-items:center}
+.bot-member-avatar{width:48px;height:48px;border-radius:50%;background:#e8f0e8;border:1.5px solid #a7c7a7;display:flex;align-items:center;justify-content:center;color:var(--green);font-size:14px;font-weight:700;flex-shrink:0;font-family:Arial,sans-serif}
+.bot-member-card h3{color:var(--green);font-size:14px;margin-bottom:2px}
+.bot-member-card .pos{font-family:Arial,sans-serif;font-size:11px;color:var(--muted);letter-spacing:0.5px;text-transform:uppercase}
+footer{background:var(--green-dark);color:white;padding:40px 32px 24px}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr;gap:32px;margin-bottom:28px}
+.footer-logo{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.footer-logo img{width:44px;height:44px;object-fit:contain}
+.footer-logo-name{color:white;font-weight:700;font-size:16px}
+.footer-tagline{font-family:Arial,sans-serif;font-size:10px;letter-spacing:2px;color:var(--gold);margin-bottom:10px}
+.footer-brand p{font-family:Arial,sans-serif;font-size:12px;opacity:0.7;line-height:1.6}
+.footer-col h4{font-family:Arial,sans-serif;font-size:10px;letter-spacing:2px;color:var(--gold);margin-bottom:12px}
+.footer-col a,.footer-col p{display:block;font-family:Arial,sans-serif;font-size:13px;opacity:0.7;text-decoration:none;margin-bottom:8px;color:white;cursor:pointer}
+.footer-col a:hover{opacity:1;color:var(--gold)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.15);padding-top:16px;font-family:Arial,sans-serif;font-size:12px;opacity:0.4;text-align:center}
+@media(max-width:768px){
+  .benefits-grid{grid-template-columns:1fr}
+  .about-grid,.bot-header{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr}
+  .nav-links,.btn-member{display:none}
+  .hamburger{display:block}
+  .pres-wrap{flex-direction:column}
+  section{padding:36px 20px}
+  .hero{padding:40px 20px 36px}
+  .mem-body{padding:24px 20px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <img src="logo.png" alt="ASIOOMON Logo">
+    <span class="nav-name">ASIOOMON</span>
+  </div>
+  <div class="nav-links">
+    <a onclick="go('home')" id="lnk-home" class="active">Home</a>
+    <a onclick="go('about')" id="lnk-about">About</a>
+    <a onclick="go('leadership')" id="lnk-leadership">Leadership</a>
+    <a onclick="go('about')">Constitution</a>
+    <a onclick="go('home')">Contact</a>
+  </div>
+  <button class="btn-member" onclick="go('membership')">Become a member</button>
+  <button class="hamburger" onclick="openMenu()">☰</button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu-header">
+    <div class="nav-logo">
+      <img src="logo.png" alt="ASIOOMON Logo" style="width:40px;height:40px;object-fit:contain">
+      <span class="nav-name">ASIOOMON</span>
+    </div>
+    <button onclick="closeMenu()" style="background:none;border:none;font-size:28px;cursor:pointer;color:var(--green)">✕</button>
+  </div>
+  <a onclick="go('home');closeMenu()">Home</a>
+  <a onclick="go('about');closeMenu()">About</a>
+  <a onclick="go('leadership');closeMenu()">Leadership</a>
+  <a onclick="go('about');closeMenu()">Constitution</a>
+  <a onclick="go('home');closeMenu()">Contact</a>
+  <button class="btn-member-mobile" onclick="go('membership');closeMenu()">Become a member</button>
+</div>
+
+<!-- HOME -->
+<div class="page active" id="page-home">
+  <div class="hero">
+    <div class="hero-badge">✦ OFFICIALLY REGISTERED</div>
+    <h1>The national voice of <span>independent marketers</span> in Nigeria.</h1>
+    <p>ASIOOMON unites online and offline multi-level marketers across Nigeria under one credible, ethical and growth-driven association. Get certified, get connected, get ahead.</p>
+    <div class="hero-btns">
+      <button class="btn-gold" onclick="go('membership')">Register as a member →</button>
+      <button class="btn-outline" onclick="go('about')">Learn about ASIOOMON</button>
+    </div>
+    <div class="hero-stats">
+      <div><span class="stat-num">36</span><span class="stat-label">STATES COVERED</span></div>
+      <div><span class="stat-num">1,000+</span><span class="stat-label">PIONEER MEMBERS</span></div>
+      <div><span class="stat-num">100%</span><span class="stat-label">ETHICS-FIRST</span></div>
+    </div>
+  </div>
+  <section style="background:white">
+    <div class="sec-label">MEMBER BENEFITS</div>
+    <div class="sec-title">Built for marketers who take their craft seriously</div>
+    <div class="benefits-grid">
+      <div class="benefit-card"><div class="b-icon">✓</div><h3>Official accreditation</h3><p>Receive a digital membership ID and certificate of recognition as an accredited ASIOOMON member.</p></div>
+      <div class="benefit-card"><div class="b-icon">⊞</div><h3>Nationwide network</h3><p>Tap into a growing community of independent marketers across all 36 states and the FCT.</p></div>
+      <div class="benefit-card"><div class="b-icon">⊙</div><h3>Trade protection</h3><p>Member-only legal guidance, dispute support and advocacy on issues affecting marketers.</p></div>
+      <div class="benefit-card"><div class="b-icon">↗</div><h3>Skills &amp; training</h3><p>Workshops, masterclasses and certifications to grow your marketing income year after year.</p></div>
+      <div class="benefit-card"><div class="b-icon">⊛</div><h3>Ethics &amp; credibility</h3><p>Operate under a recognised code of conduct that builds customer trust in your business.</p></div>
+      <div class="benefit-card"><div class="b-icon">✦</div><h3>Exclusive opportunities</h3><p>Early access to brand partnerships, government programs and member-only commercial deals.</p></div>
+    </div>
+  </section>
+  <div class="cta">
+    <h2>Ready to join Nigeria's marketers' association?</h2>
+    <p>Complete your registration in minutes, pay your dues securely, and receive your official membership ID.</p>
+    <button class="btn-gold" onclick="go('membership')">Start your registration →</button>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<div class="page" id="page-about">
+  <div class="hero" style="padding:40px 32px 36px">
+    <div class="sec-label" style="color:var(--gold);font-family:Arial,sans-serif;font-size:11px;letter-spacing:2px;margin-bottom:12px">ABOUT ASIOOMON</div>
+    <h1 style="font-size:clamp(20px,3.5vw,32px);color:white;margin-bottom:12px">Association of Independent Online and Offline Multi Level Marketers of Nigeria</h1>
+    <p style="font-family:Arial,sans-serif;font-size:14px;opacity:0.9;max-width:520px">Nigeria's professional body for ethical, independent marketers. Connecting Marketers, Growing Opportunities.</p>
+  </div>
+  <section style="background:var(--cream2)">
+    <div class="pres-wrap">
+      <div class="pres-logo"><img src="logo.png" alt="ASIOOMON Logo"></div>
+      <div style="flex:1;min-width:200px">
+        <div class="pres-label">WELCOME ADDRESS</div>
+        <h2>A message from the President</h2>
+        <p>On behalf of the National Executive Council, I welcome you to ASIOOMON — the Association of Independent Online and Offline Multi Level Marketers of Nigeria. We exist to dignify the marketing profession, protect our members, and create opportunities that change lives.</p>
+        <p>Whether you market from a shop in your local community or from a smartphone serving customers across continents, you belong here. Together we are building the most respected community of independent marketers on the African continent.</p>
+        <div class="pres-sig"><strong>Amb. Oluwarotimi Oluwatobi Ayodele</strong><span>Interim NEC President · ASIOOMON</span></div>
+      </div>
+    </div>
+  </section>
+  <section style="background:var(--cream)">
+    <div class="sec-label">OUR PURPOSE</div>
+    <div class="sec-title">Mission &amp; Vision</div>
+    <div class="about-grid">
+      <div class="about-card"><h3>Our mission</h3><p>To unite, train and protect independent marketers across Nigeria, building a community defined by ethics, professionalism and prosperity.</p></div>
+      <div class="about-card"><h3>Our vision</h3><p>To be the most trusted and influential professional body for independent online and offline marketers on the African continent.</p></div>
+    </div>
+  </section>
+  <div class="cta">
+    <h2>Ready to join?</h2>
+    <p>Complete your registration in minutes and receive your official membership ID.</p>
+    <button class="btn-gold" onclick="go('membership')">Start your registration →</button>
+  </div>
+</div>
+
+<!-- LEADERSHIP -->
+<div class="page" id="page-leadership">
+  <div class="hero" style="padding:40px 32px 36px">
+    <div class="sec-label" style="color:var(--gold);font-family:Arial,sans-serif;font-size:11px;letter-spacing:2px;margin-bottom:12px">GOVERNANCE</div>
+    <h1 style="font-size:clamp(20px,3.5vw,32px);color:white;margin-bottom:12px">ASIOOMON Leadership</h1>
+    <p style="font-family:Arial,sans-serif;font-size:14px;opacity:0.9;max-width:480px">The interim officers and board of trustees guiding ASIOOMON's mission to unite, protect and advance independent marketers across Nigeria.</p>
+  </div>
+  <section style="background:var(--cream)">
+    <div class="sec-label">INTERIM NEC</div>
+    <div class="sec-title">National Executive Council</div>
+    <div style="background:#fffbeb;border:0.5px solid #fbbf24;border-radius:12px;padding:14px 18px;margin-bottom:24px;font-family:Arial,sans-serif;font-size:13px;color:#78350f;line-height:1.6">
+      <strong>Interim leadership notice:</strong> The officers below serve in an interim capacity pending formal elections by the full membership in accordance with the ASIOOMON constitution.
+    </div>
+    <div class="exec-grid" style="margin-bottom:48px">
+      <div class="leader-card">
+        <div class="leader-avatar">AO</div>
+        <div class="leader-info">
+          <h3>Amb. Oluwarotimi Oluwatobi Ayodele</h3>
+          <div class="pos">Interim NEC President</div>
+          <p>Provides overall leadership and vision for the association, chairs the National Executive Council, and represents ASIOOMON at national and continental forums.</p>
+          <span class="interim-badge">Interim Officer</span>
+        </div>
+      </div>
+      <div class="leader-card">
+        <div class="leader-avatar">AA</div>
+        <div class="leader-info">
+          <h3>Mr. Akinwumiju Akinshola</h3>
+          <div class="pos">Interim NEC Secretary</div>
+          <p>Manages all administrative affairs of the association, maintains official records, and coordinates council meetings and correspondence.</p>
+          <span class="interim-badge">Interim Officer</span>
+        </div>
+      </div>
+      <div class="leader-card">
+        <div class="leader-avatar">AM</div>
+        <div class="leader-info">
+          <h3>Mr. Abass Ayobami Moshood</h3>
+          <div class="pos">Interim NEC Treasurer</div>
+          <p>Oversees financial management, membership dues collection, budgeting, and annual financial reporting in line with the association's constitution.</p>
+          <span class="interim-badge">Interim Officer</span>
+        </div>
+      </div>
+      <div class="leader-card">
+        <div class="leader-avatar">IR</div>
+        <div class="leader-info">
+          <h3>Miss. Idorenyin Richard</h3>
+          <div class="pos">Interim NEC PRO</div>
+          <p>Manages ASIOOMON's public image, media relations, communications strategy, and outreach to potential members across Nigeria.</p>
+          <span class="interim-badge">Interim Officer</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec-label">BOARD OF TRUSTEES</div>
+    <div class="sec-title">Governing Board</div>
+    <p style="font-family:Arial,sans-serif;font-size:13.5px;color:var(--muted);line-height:1.7;margin-bottom:24px;max-width:560px">The Board of Trustees is the governing body of ASIOOMON as established under the constitution registered with the Corporate Affairs Commission. They provide constitutional oversight and institutional continuity.</p>
+    <div class="bot-header">
+      <div class="bot-officer">
+        <div class="bot-avatar">TR</div>
+        <div><h3>Thinkrich</h3><div class="pos">Chairman</div></div>
+      </div>
+      <div class="bot-officer">
+        <div class="bot-avatar">GW</div>
+        <div><h3>Gwealth</h3><div class="pos">Secretary</div></div>
+      </div>
+    </div>
+    <div style="font-family:Arial,sans-serif;font-size:11px;letter-spacing:1.5px;color:var(--muted);margin-bottom:12px">BOARD MEMBERS</div>
+    <div class="bot-members">
+      <div class="bot-member-card"><div class="bot-member-avatar">AM</div><div><h3>Abass Moshood</h3><div class="pos">Board Member</div></div></div>
+      <div class="bot-member-card"><div class="bot-member-avatar">FG</div><div><h3>Fadope Gbenga</h3><div class="pos">Board Member</div></div></div>
+      <div class="bot-member-card"><div class="bot-member-avatar">JD</div><div><h3>Joshua Daramola</h3><div class="pos">Board Member</div></div></div>
+    </div>
+    <div style="margin-top:14px;font-family:Arial,sans-serif;font-size:12px;color:var(--muted);opacity:0.7">Registered: October 16, 2018 · Corporate Affairs Commission, Nigeria</div>
+  </section>
+  <div class="cta">
+    <h2>Join under great leadership</h2>
+    <p>Register today and become part of a professionally governed association.</p>
+    <button class="btn-gold" onclick="go('membership')">Become a member →</button>
+  </div>
+</div>
+
+<!-- MEMBERSHIP -->
+<div class="page" id="page-membership">
+  <div class="mem-hero">
+    <div class="sec-label">MEMBERSHIP</div>
+    <h1>Become an accredited ASIOOMON member.</h1>
+    <p>Annual dues: <strong>₦10,000</strong> per member. Complete the form below to begin.</p>
+  </div>
+  <div class="mem-body" style="background:var(--cream)">
+    <div class="form-card">
+      <div class="form-body" id="formBody">
+        <div class="form-stitle">Personal details</div>
+        <div class="form-group"><label>Full name <span>*</span></label><input type="text" id="fname" placeholder="Enter your full name"></div>
+        <div class="form-group"><label>Email <span>*</span></label><input type="email" id="femail" placeholder="Enter your email address"></div>
+        <div class="form-group"><label>Phone <span>*</span></label><input type="tel" id="fphone" placeholder="Enter your phone number"></div>
+        <hr class="form-divider">
+        <div class="form-stitle">Location</div>
+        <div class="form-group"><label>State of residence <span>*</span></label>
+          <select id="fstate">
+            <option value="">Select state</option>
+            <option>Abia</option><option>Adamawa</option><option>Akwa Ibom</option><option>Anambra</option><option>Bauchi</option><option>Bayelsa</option><option>Benue</option><option>Borno</option><option>Cross River</option><option>Delta</option><option>Ebonyi</option><option>Edo</option><option>Ekiti</option><option>Enugu</option><option>FCT Abuja</option><option>Gombe</option><option>Imo</option><option>Jigawa</option><option>Kaduna</option><option>Kano</option><option>Katsina</option><option>Kebbi</option><option>Kogi</option><option>Kwara</option><option>Lagos</option><option>Nasarawa</option><option>Niger</option><option>Ogun</option><option>Ondo</option><option>Osun</option><option>Oyo</option><option>Plateau</option><option>Rivers</option><option>Sokoto</option><option>Taraba</option><option>Yobe</option><option>Zamfara</option>
+          </select>
+        </div>
+        <hr class="form-divider">
+        <div class="form-stitle">Marketing details</div>
+        <div class="form-group"><label>Type of marketing <span>*</span></label>
+          <select id="ftype"><option value="">Select type</option><option>Online marketing</option><option>Offline marketing</option><option>Both online and offline</option><option>Multi-level marketing</option></select>
+        </div>
+        <div class="form-group"><label>Years of experience</label>
+          <select id="fyears"><option value="">Select range</option><option>Less than 1 year</option><option>1–3 years</option><option>3–5 years</option><option>5–10 years</option><option>10+ years</option></select>
+        </div>
+        <button class="btn-submit" onclick="submitForm()">Submit registration →</button>
+      </div>
+      <div class="success-screen" id="successScreen">
+        <div style="font-size:56px;margin-bottom:16px">✅</div>
+        <h2 style="color:var(--green);margin-bottom:10px;font-size:22px">Registration submitted!</h2>
+        <p style="font-family:Arial,sans-serif;color:var(--muted);margin-bottom:24px;line-height:1.6">Thank you for registering with ASIOOMON. Your application is being reviewed and you will receive your membership ID via email shortly.</p>
+        <button class="btn-member" onclick="go('home')">Back to home</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo">
+        <img src="logo.png" alt="ASIOOMON Logo">
+        <span class="footer-logo-name">ASIOOMON</span>
+      </div>
+      <div class="footer-tagline">CONNECTING MARKETERS, GROWING OPPORTUNITIES</div>
+      <p>Association of Independent Online and Offline Multi Level Marketers of Nigeria — Nigeria's professional body for ethical, independent marketers.</p>
+    </div>
+    <div class="footer-col">
+      <h4>EXPLORE</h4>
+      <a onclick="go('home')">Home</a>
+      <a onclick="go('about')">About</a>
+      <a onclick="go('leadership')">Leadership</a>
+      <a onclick="go('about')">Constitution</a>
+      <a onclick="go('home')">Contact</a>
+      <a onclick="go('membership')">Registration</a>
+    </div>
+    <div class="footer-col">
+      <h4>CONTACT</h4>
+      <p>info@asioomon.org.ng</p>
+      <p>+234 800 000 0000</p>
+      <p>Abuja, Nigeria</p>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 ASIOOMON. All rights reserved.</div>
+</footer>
+
+<script>
+function go(p){
+  document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+  document.getElementById('page-'+p).classList.add('active');
+  document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));
+  var lnk=document.getElementById('lnk-'+p);
+  if(lnk) lnk.classList.add('active');
+  window.scrollTo(0,0);
+}
+function openMenu(){ document.getElementById('mobileMenu').classList.add('open'); }
+function closeMenu(){ document.getElementById('mobileMenu').classList.remove('open'); }
+function submitForm(){
+  var n=document.getElementById('fname').value.trim();
+  var e=document.getElementById('femail').value.trim();
+  var ph=document.getElementById('fphone').value.trim();
+  var st=document.getElementById('fstate').value;
+  var ty=document.getElementById('ftype').value;
+  if(!n||!e||!ph||!st||!ty){ alert('Please fill in all required fields.'); return; }
+  document.getElementById('formBody').classList.add('hidden');
+  document.getElementById('successScreen').classList.add('show');
+}
+</script>
+</body>
+</html>
